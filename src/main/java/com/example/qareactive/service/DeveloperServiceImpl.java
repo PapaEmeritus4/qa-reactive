@@ -56,7 +56,8 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     @Override
     public Mono<DeveloperEntity> getById(Integer id) {
-        return developerRepository.findById(id);
+        return developerRepository.findById(id)
+                .switchIfEmpty(Mono.error(new DeveloperNotFoundException("Developer not found", "DEVELOPER_NOT_FOUND")));
     }
 
     @Override
